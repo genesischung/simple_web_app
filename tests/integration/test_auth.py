@@ -1,6 +1,6 @@
 import pytest
 from flask import g, session
-from app.db import get_db
+from app.db_postgres import get_db
 
 
 
@@ -17,9 +17,12 @@ def test_register(client, app):
     assert response.headers["Location"] == "/auth/login"
 
     with app.app_context():
-        assert get_db().execute(
-            "SELECT * FROM user WHERE username = 'a'",
-        ).fetchone() is not None
+        curs = get_db().cursor()
+        curs.execute(
+            "SELECT * FROM auth WHERE username = 'a'",
+        )
+        username = curs.fetchone()
+        assert username is not None
 
 
 @pytest.mark.parametrize(('username', 'password', 'message'), (
