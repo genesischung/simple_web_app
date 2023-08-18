@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}DTSA-5714{% endblock %}</h1>
+    {% if not g.user %}
+        <p>Guest</p>
+    {% endif %}
+
+    {% if g.user %}
+        <p>Logged In</p>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <p>{{ text }}</p>
+    {% if g.user %}
+        <form>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Enter your message:</label>
+                <input type="text" class="form-control" id="user_input">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+            {% else %}
+        <p>You have to log in to enter your message.</p>
+    {% endif %}
+{% endblock %}
