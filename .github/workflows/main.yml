@@ -7,7 +7,7 @@ on:
 
 jobs:
   ci:
-    name: Continous Integration
+    name: Continuous Integration
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,7 +26,7 @@ jobs:
         run: |
           pytest 
   cd:
-    name: Continous Delivery
+    name: Continuous Delivery
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
