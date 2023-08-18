@@ -7,7 +7,7 @@
     {% endif %}
 
     {% if g.user %}
-        <p>Logged In</p>
+        <p>Logged in as {{ g.user['username'] }}</p>
     {% endif %}
 {% endblock %}
 
