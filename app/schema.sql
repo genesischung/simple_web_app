@@ -1,8 +1,9 @@
 DROP TABLE IF EXISTS auth;
-DROP TABLE IF EXISTS post;
 
-CREATE TABLE auth (
+CREATE TABLE IF NOT EXISTS test_table(
+    id serial primary key);
+
+CREATE TABLE IF NOT EXISTS auth(
     id serial PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
-    password TEXT NOT NULL
-);
+    password TEXT NOT NULL);

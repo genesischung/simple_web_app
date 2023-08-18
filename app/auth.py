@@ -6,7 +6,6 @@ from flask import (
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-#from app.db import get_db
 from app.db_postgres import get_db
 import psycopg2
 import psycopg2.extras

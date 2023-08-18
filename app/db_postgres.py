@@ -12,7 +12,7 @@ def get_db():
     return g.db
 
 
-def close_db():
+def close_db(e=None):
     db = g.pop('db', None)
 
     if db is not None:
@@ -23,7 +23,14 @@ def init_db():
     db = get_db()
     with db.cursor() as curs:
         with current_app.open_resource('schema.sql') as f:
-            curs.execute(f.read().decode('utf8'))
+            queries = f.read().decode('utf8')
+            curs.execute(queries)
+            '''
+            for q in queries:
+                print("query:" + q, flush=True)
+                curs.execute(q)
+            '''
+
     db.commit()
 
 

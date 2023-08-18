@@ -29,9 +29,9 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # connect db
-    from . import db
-    db.init_app(app)
+    # connect to postgres
+    from . import db_postgres
+    db_postgres.init_app(app)
 
     # blueprint
     from . import auth

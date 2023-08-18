@@ -23,3 +23,16 @@
     {% endfor %}
     {% block content %}{% endblock %}
 </section>
+<div class="container my-5">
+    <!-- Footer -->
+    <footer
+            class="text-center text-lg-start text-white"
+            style="background-color: #3e4551"
+    >
+        <form action="/init_db" method="post">
+            <button type="submit" class="btn btn-primary">Init Database</button>
+        </form>
+    </footer>
+    <!-- Footer -->
+</div>
+<!-- End of .container -->
