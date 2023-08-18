@@ -1,8 +1,8 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
-from werkzeug.exceptions import abort
 
+import os
 
 
 from app.auth import login_required
@@ -14,7 +14,8 @@ bp = Blueprint('f1', __name__)
 @bp.route('/')
 def index():
     db = get_db()
-    return render_template('index.html', text="Hello World!")
+    database_url = os.environ.get("DATABASE_URL")
+    return render_template('index.html', text=database_url)
 
 
 @bp.route("/message", methods=["POST"])
