@@ -9,6 +9,16 @@ jobs:
   ci:
     name: Continuous Integration
     runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15.4
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: postgres
+        ports:
+          -5432:5432
     strategy:
       matrix:
         python-version: ["3.9"]
@@ -25,3 +35,5 @@ jobs:
       - name: Test with pytest
         run: |
           pytest
+        env:
+          DATABASE_URL: postgres://postgres:password@postgres:5432/postgres
