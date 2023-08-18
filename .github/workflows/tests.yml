@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI
 
 on:
   push:
@@ -24,14 +24,4 @@ jobs:
           pip install -r requirements.txt
       - name: Test with pytest
         run: |
-          pytest 
-  cd:
-    name: Continuous Delivery
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: akhileshns/heroku-deploy@v3.12.14 # This is the action
-        with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "zhong-simple-web-app" #Must be unique in Heroku
-          heroku_email: "genesischung@me.com"
+          pytest

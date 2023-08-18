@@ -1,0 +1,20 @@
+name: CD
+
+on:
+  workflow_run:
+    workflows: CI
+    branches: master
+    types: completed
+
+jobs:
+  cd:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    name: Continuous Delivery
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: akhileshns/heroku-deploy@v3.12.14 # This is the action
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "zhong-simple-web-app" #Must be unique in Heroku
+          heroku_email: "genesischung@me.com"
