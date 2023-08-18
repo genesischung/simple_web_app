@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}DTSA-5714{% endblock %}</h1>
+    {% if not g.user %}
+        <p>Guest</p>
+    {% endif %}
+
+    {% if g.user %}
+        <p>Logged In</p>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="alert alert-success" role="alert">
+        The website is healthy!
+    </div>
+{% endblock %}
