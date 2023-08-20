@@ -1,11 +1,12 @@
 import os
 
 from flask import Flask
-
+from prometheus_flask_exporter import PrometheusMetrics
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+
     app.jinja_env.auto_reload = True
     app.config["DEBUG"] = True
     app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -41,9 +42,13 @@ def create_app(test_config=None):
     from . import f1
     app.register_blueprint(f1.bp)
     app.add_url_rule('/', endpoint='index')
+    # initialized Prometheus metrics
+    # bind it to '/metrics' end point
+    f1.metrics.init_app(app)
 
     from . import data_analysis
     app.register_blueprint(data_analysis.bp)
+    data_analysis.metrics.init_app(app)
 
 # a simple page that says hello
     @app.route('/hello')

@@ -7,6 +7,11 @@ from flask import Blueprint, render_template
 
 from psycopg2.extras import RealDictCursor
 
+from prometheus_flask_exporter import PrometheusMetrics
+metrics = PrometheusMetrics(None, path=None)
+metrics.info('data_analysis_app_info', 'Data Analysis app info', version='1.0.3')
+
+
 bp = Blueprint('data_analysis', __name__, url_prefix='/analysis')
 @bp.route('/countdown')
 def time_until_next_race():
