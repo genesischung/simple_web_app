@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Look up driver by driver ID{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <p>Driver id: {{ driver_id }}</p>
+    <p>The driver you looked up is: {{ fname }} {{ lname }}</p>
+{% endblock %}

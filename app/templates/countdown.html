@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Countdown until next race{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div style='margin:auto;text-align:center'>
+        <a id='clock'></a>
+    </div>
+    <script type="text/javascript">
+        function floorDiv (num, div) {
+            return Math.floor(num / div)
+        }
+
+        function portion(num, div) {
+            var pieces = floorDiv(num, div)
+            return [pieces, num - (pieces * div)]
+        }
+
+        var el = document.getElementById('clock');
+
+        function tick() {
+
+            var future = {{time}}
+            var now = Math.floor(Date.now() / 1000) // in seconds
+            var remaining = (future - now)  // seconds
+
+            var [days, remaining] = portion(remaining, 60 * 60 * 24);
+            var [hours, remaining] = portion(remaining, 60 * 60);
+            var [minutes, remaining] = portion(remaining, 60);
+            var [secs, remaining] = portion(remaining, 1);
+
+            el.innerText = days + ' Days - ' +
+                String(hours).padStart(2, '0') + 'h:' +
+                String(minutes).padStart(2, '0') + 'm:' +
+                String(secs).padStart(2, '0') + 's'
+        }
+        tick();
+        window.setInterval(tick, 1000);
+    </script>
+{% endblock %}
+
+
