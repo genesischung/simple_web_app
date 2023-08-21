@@ -5,9 +5,62 @@
 {% endblock %}
 
 {% block content %}
-    <div style='margin:auto;text-align:center'>
-        <a id='clock'></a>
+    <div class="container-fluid" id="countdown">
+    <br>
+        <h1 id="headline">Round {{ data['round'] }} of the {{ data['season']}} Season</h1>
+        <h1 id="headline">{{ data['racename']}}</h1>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8" id="countdown_box">
+            <ul>
+                <li><span id="days"></span>days</li>
+                <li><span id="hours"></span>Hours</li>
+                <li><span id="minutes"></span>Minutes</li>
+                <li><span id="seconds"></span>Seconds</li>
+            </ul>
+        </div>
+        <div class="col-2"></div>
     </div>
+
+        <style>
+            #countdown * {
+                box-sizing: border-box;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+            }
+            #countdown .container {
+                align-items: center;
+                color: #333;
+                margin: 0 auto;
+                text-align: center;
+            }
+
+            #countdown h1 {
+                font-weight: normal;
+                letter-spacing: .125rem;
+                text-transform: uppercase;
+                text-align: center;
+            }
+
+            #countdown li {
+                text-align: center;
+                display: inline-block;
+                font-size: 1.5em;
+                list-style-type: none;
+                padding: 1em;
+                text-transform: uppercase;
+            }
+
+            #countdown li span {
+                text-align: center;
+                display: block;
+                font-size: 4.5rem;
+            }
+
+        </style>
+        </div>
+
     <script type="text/javascript">
         function floorDiv (num, div) {
             return Math.floor(num / div)
@@ -18,11 +71,14 @@
             return [pieces, num - (pieces * div)]
         }
 
-        var el = document.getElementById('clock');
+        var d = document.getElementById('days')
+        var h = document.getElementById('hours')
+        var m = document.getElementById('minutes')
+        var s = document.getElementById('seconds')
 
         function tick() {
 
-            var future = {{time}}
+            var future = {{data['time']}}
             var now = Math.floor(Date.now() / 1000) // in seconds
             var remaining = (future - now)  // seconds
 
@@ -31,10 +87,10 @@
             var [minutes, remaining] = portion(remaining, 60);
             var [secs, remaining] = portion(remaining, 1);
 
-            el.innerText = days + ' Days - ' +
-                String(hours).padStart(2, '0') + 'h:' +
-                String(minutes).padStart(2, '0') + 'm:' +
-                String(secs).padStart(2, '0') + 's'
+            d.innerText = String(days)
+            h.innerText = String(hours)
+            m.innerText = String(minutes)
+            s.innerText = String(secs)
         }
         tick();
         window.setInterval(tick, 1000);

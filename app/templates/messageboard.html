@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Message Board{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+
+                <ul class="list-group" style="height: 550px; overflow-y: scroll;">
+
+                    {% for row in messages %}
+                        <li class="list-group-item">
+                            <div class="media text-muted pt-3">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="" class="mr-2 rounded" width="32" height="32">
+                                <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                                    <strong class="d-block text-gray-dark">{{ row['username'] }}</strong>
+                                    {{ row['message'] }}
+                                </p>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+            <div class="col-md-4">
+                {% if g.user %}
+                    <form action="/message" method="POST">
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Enter your message:</label>
+                            <input type="text" class="form-control" id="user_input" name="user_input">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                {% else %}
+                    <div class="alert alert-danger" role="alert">
+                    You have to log in to see the content
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
