@@ -73,10 +73,14 @@ def lookup_driver(driver_id):
     :param driver_id:
     :return: driver's first and last name
     """
-    conn = get_db()
-    with conn.cursor(cursor_factory=RealDictCursor) as curs:
-        curs.execute("SELECT * FROM drivers WHERE driverID = %s", (driver_id,))
-        driver = curs.fetchone()
+    try:
+        conn = get_db()
+        with conn.cursor(cursor_factory=RealDictCursor) as curs:
+            curs.execute("SELECT * FROM drivers WHERE driverID = %s", (driver_id,))
+            driver = curs.fetchone()
+    except:
+        return render_template('driver.html', driver_id=driver_id,
+                                fname='DB connection failed')
     if driver is None:
         driver = data_collection.get_driver(driver_id)
         fname = driver['givenName']
@@ -108,10 +112,35 @@ def get_all_drivers():
     """
     :return: a dict containing all driverID to driver names
     """
-    conn = get_db()
-    with conn.cursor(cursor_factory=RealDictCursor) as curs:
-        curs.execute("SELECT * FROM drivers;")
-        drivers = curs.fetchall()
+    try:
+        conn = get_db()
+        with conn.cursor(cursor_factory=RealDictCursor) as curs:
+            curs.execute("SELECT * FROM drivers;")
+            drivers = curs.fetchall()
+    except:
+        # when DB connection is down
+        # return a offline dict from 2023 season
+        return {'albon': 'Alexander Albon',
+                'alonso': 'Fernando Alonso',
+                'bottas': 'Valtteri Bottas',
+                'de_vries': 'Nyck de Vries',
+                'gasly': 'Pierre Gasly',
+                'hamilton': 'Lewis Hamilton',
+                'hulkenberg': 'Nico Hülkenberg',
+                'kevin_magnussen': 'Kevin Magnussen',
+                'leclerc': 'Charles Leclerc',
+                'max_verstappen': 'Max Verstappen',
+                'norris': 'Lando Norris',
+                'ocon': 'Esteban Ocon',
+                'perez': 'Sergio Pérez',
+                'piastri': 'Oscar Piastri',
+                'ricciardo': 'Daniel Ricciardo',
+                'russell': 'George Russell',
+                'sainz': 'Carlos Sainz',
+                'sargeant': 'Logan Sargeant',
+                'stroll': 'Lance Stroll',
+                'tsunoda': 'Yuki Tsunoda',
+                'zhou': 'Guanyu Zhou'}
 
     if drivers is None:
         return None
@@ -141,19 +170,31 @@ def pitstop(season, rounds):
     """
     Compare the pitstops in a race
     """
-    conn = get_db()
-    with conn.cursor(cursor_factory=RealDictCursor) as curs:
-        curs.execute("SELECT * FROM pitstops WHERE season = %s AND round = %s;", (season, rounds,))
-        data = curs.fetchone()
+    try:
+        conn = get_db()
+        with conn.cursor(cursor_factory=RealDictCursor) as curs:
+            curs.execute("SELECT * FROM pitstops WHERE season = %s AND round = %s;", (season, rounds,))
+            data = curs.fetchone()
+    except:
+        return render_template('pitstops.html', race_name="Database Down... Please Try Again")
     if data is None:
         data = data_collection.get_pitstops(season, rounds)
     else:
         data = data['data']
 
-    race_name = data['raceName']
+    race_name = str(season) + ' ' + data['raceName']
+
+    # sort the list based on pitstop time
     pitstop_data = sorted(data['PitStops'], key=lambda d:to_seconds(d['duration']))
     mapper = get_all_drivers()
 
-    return pitstop_data
+    # append driver name to list
+    for p in pitstop_data:
+        if p['driverId'] in mapper:
+            p['driverName'] = mapper[p['driverId']]
+        else:
+            p['driverName'] = get_new_driver(p['driverId'])
+
+    return render_template('pitstops.html', race_name=race_name, pitstop_data=pitstop_data)
 
 

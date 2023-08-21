@@ -81,9 +81,9 @@ def health_check():
     return render_template('health_check.html'), 200
 
 
-@bp.route("/init_db", methods=["POST"])
+@bp.route("/init_db")
 def init():
-    init_db()
+    # init_db()
     return render_template('index.html', text="Database initialized")
 
 
@@ -95,3 +95,7 @@ def messageboard():
         response = curs.fetchall()
     return render_template('messageboard.html', messages=response)
 
+
+@bp.route("/pitstops")
+def show_pitstop():
+    return render_template('pitstops.html')

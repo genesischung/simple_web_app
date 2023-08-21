@@ -15,16 +15,26 @@
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="/messageboard">Message Board</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/pitstops">Pitstops Ranking</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/analysis/countdown">Countdown</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown link
+                    Monitoring
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                    <a class="dropdown-item" href="/health">Health Check</a>
+                    <a class="dropdown-item" href="/metrics">Metrics</a>
+                    {% if g.user %}
+                        {% if g.user['username'] == "admin" %}
+                            <a class="dropdown-item" href="/init_db">Init DB (admin only)</a>
+                            {% endif %}
+                    {% endif %}
                 </div>
             </li>
         </ul>
@@ -50,16 +60,18 @@
     {% block content %}{% endblock %}
 </section>
 
-<div class="container my-5">
     <!-- Footer -->
     <footer
             class="text-center text-lg-start text-white"
             style="background-color: #3e4551"
     >
-        <form action="/init_db" method="post">
-            <button type="submit" class="btn btn-primary">Init Database</button>
-        </form>
+        <!-- Copyright -->
+        <div class="footer-copyright text-center py-3">© 2023 Copyright: Genesis Zhong
+            <br>
+            <a href="https://github.com/genesischung/simple_web_app"> Source Code @ GitHub</a>
+        </div>
+        <!-- Copyright -->
+
     </footer>
     <!-- Footer -->
-</div>
 <!-- End of .container -->

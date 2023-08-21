@@ -2,10 +2,15 @@ import click
 from flask import current_app, g
 import psycopg2
 
+
 def get_db():
     if 'db' not in g:
         try:
-            g.db = psycopg2.connect(current_app.config['DATABASE_URL'])
+            g.db = psycopg2.connect(current_app.config['DATABASE_URL'],
+                                    keepalives=1,
+                                    keepalives_idle=30,
+                                    keepalives_interval=10,
+                                    keepalives_count=5)
         except:
             print("Unable to connect to Database")
 
