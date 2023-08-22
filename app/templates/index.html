@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-    <h1>{% block title %}DTSA-5714{% endblock %}</h1>
+    <h1>{% block title %}Home Page{% endblock %}</h1>
     {% if not g.user %}
         <p>Guest</p>
     {% endif %}
@@ -15,10 +15,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <p>{{ text }}</p>
+                <br>
+                <div class="card">
+                    <div class="card-header">
+                        Welcome message
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Welcome to my DTSA-5714 Project</h5>
+                        <p class="card-text">To get started, choose one of the options in the navigation bar,
+                        or leave a message on the right</p>
+                    </div>
+                </div>
+
             </div>
             <div class="col-md-4">
                 {% if g.user %}
+                    <br>
                     <h3>Leave your message!</h3>
                     <form action="/message" method="POST">
                         <div class="mb-3">

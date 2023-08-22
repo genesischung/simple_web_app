@@ -45,10 +45,6 @@ def test_get_next_race(mocker):
                                                'time': '13:00:00Z'}
 
 
-import pytest
-from app import data_collection
-
-
 def test_get_results(mocker):
     mocker_requests = mocker.patch("app.data_collection.requests")
     mock_response = mocker.MagicMock()
