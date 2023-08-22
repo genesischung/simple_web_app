@@ -94,6 +94,7 @@ def lookup_driver(driver_id):
                             lname=lname)
 
 
+@bp.route('/get_new_driver/<driver_id>')
 def get_new_driver(driver_id):
     """
     :param driver_id:
@@ -102,6 +103,7 @@ def get_new_driver(driver_id):
     driver = data_collection.get_driver(driver_id)
     # if lookup failed, return the driver_id
     if driver is None:
+        print("get new driver {} failed".format(driver_id))
         return driver_id
     fname = driver['givenName']
     lname = driver['familyName']
@@ -193,6 +195,7 @@ def pitstop(season, rounds):
         if p['driverId'] in mapper:
             p['driverName'] = mapper[p['driverId']]
         else:
+            print("get new driver", p['driverId'], flush=True)
             p['driverName'] = get_new_driver(p['driverId'])
 
     return render_template('pitstops.html', race_name=race_name, pitstop_data=pitstop_data)

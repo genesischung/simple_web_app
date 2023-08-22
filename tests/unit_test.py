@@ -20,3 +20,17 @@ def test_index_headers(app, client):
     response = client.get('/')
     assert 'Content-Type' in response.headers
     assert response.headers['Content-Type'] == 'text/html; charset=utf-8'
+
+
+def test_health(client, auth):
+    response = client.get('/health')
+    assert response.status_code == 200
+
+
+def test_messageboard(client, auth):
+    response = client.get('/messageboard')
+    assert response.status_code == 200
+
+def test_pitstops(client, auth):
+    response = client.get('/pitstops')
+    assert response.status_code == 200

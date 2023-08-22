@@ -39,7 +39,6 @@ def get_results(season=2023, rounds=1):
             curs.execute("INSERT INTO results (season, round, data) VALUES (%s, %s, %s);",
                             (season, rounds, Json(data)))
         conn.commit()
-        conn.close()
         # return data to indicate success
         #print("Get results season {} round {}", format(season, rounds))
         return data
@@ -66,7 +65,6 @@ def get_pitstops(season=2023, rounds=1):
             curs.execute("INSERT INTO pitstops (season, round, data) VALUES (%s, %s, %s);",
                             (season, rounds, Json(data)))
         conn.commit()
-        conn.close()
         # return data to indicate success
         #print("Get pitstops season {}, round {}".format(season, rounds))
         return data
@@ -92,7 +90,6 @@ def get_driver(driver_id='zhou'):
             curs.execute("INSERT INTO drivers (driverID, givenName, familyName) VALUES (%s, %s, %s) ON CONFLICT DO NOTHING;",
                             (driver_id, fname, lname))
         conn.commit()
-        conn.close()
         # return data to indicate success
         #print("Get driver {}".format(driver_id))
         return driver

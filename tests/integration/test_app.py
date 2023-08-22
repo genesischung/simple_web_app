@@ -16,5 +16,3 @@ def test_loggedin(client, auth):
     print(response.data)
     assert b'Log Out' in response.data
     assert b'Logged in as' in response.data
-
-
